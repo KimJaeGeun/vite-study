@@ -1,19 +1,55 @@
 <script setup lang="ts">
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch, watchEffect } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from '@/components/HelloWorld.vue'
 
 const x = ref(1)
 const y = ref(2)
+const z = ref(0);
 
+// let a = 1;
+// const b = 1;
+// const c = a + b;
 
+// a = 2
+
+// console.log(c)
+
+const setup = reactive({
+  a: 1,
+  b: 2,
+})
+
+// const d = setup.a + setup.b;
+
+// setup.a =2
+
+// console.log(d)
 
 // array of multiple sources
 watch([x, y], ([newX, newY], [prevX, prevY]) => {
   console.log(`prev x is ${prevX} and current x is ${newX}`)
 })
 
-x.value = 2;
+watchEffect(() => {
+  console.log(setup.a + setup.b);
+}, {
+  // 콜백함수 내 반응성 객체를 추적
+  onTrack(e) {
+    console.log(e)
+  },
+  // 콜백함수 내 반응성 객체의 변경 트리거를 추적
+  onTrigger(e) {
+    console.log(e)
+  }
+})
+
+setup.a = 2;
+
+setTimeout( () => {
+  setup.b = 3;
+}, 3000)
+
 
 </script>
 
