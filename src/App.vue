@@ -1,73 +1,31 @@
 <script setup lang="ts">
-import { ref, reactive, watch, watchEffect } from 'vue'
+import { ref, reactive, watch, watchEffect, computed } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from '@/components/HelloWorld.vue'
 
-const x = ref(1)
-const y = ref(2)
-const z = ref(0);
-
-// let a = 1;
-// const b = 1;
-// const c = a + b;
-
-// a = 2
-
-// console.log(c)
-
-const setup = reactive({
-  a: 1,
-  b: 2,
-})
-
-// const d = setup.a + setup.b;
-
-// setup.a =2
-
-// console.log(d)
-
-// array of multiple sources
-watch([x, y], ([newX, newY], [prevX, prevY]) => {
-  console.log(`prev x is ${prevX} and current x is ${newX}`)
-})
-
-watchEffect(() => {
-  console.log(setup.a + setup.b);
-}, {
-  // 콜백함수 내 반응성 객체를 추적
-  onTrack(e) {
-    console.log(e)
+const a = 1;
+const b = 2;
+const test = ref({
+  a: {
+    a1: 1,
+    a2: 2,
   },
-  // 콜백함수 내 반응성 객체의 변경 트리거를 추적
-  onTrigger(e) {
-    console.log(e)
-  }
-})
+  b: "hi"
+});
 
-setup.a = 2;
+watch(test, (val) => {
+  console.log(val)
+}, { deep: false})
 
-setTimeout( () => {
-  setup.b = 3;
-}, 3000)
-
-
+setTimeout(() => {
+  test.value.a.a2 = 5;
+  // test.value.b = "good bye"
+},3000)
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <!-- template내에서는 .value없이 값에 접근 가능  -->
+  <div>{{ test.b }}</div>
 </template>
 
 <style>
