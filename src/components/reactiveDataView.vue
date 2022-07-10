@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, isReactive, readonly } from 'vue'
 // not reactive data
 const text = "not reactive";
 const array = ["not reactive"];
@@ -19,7 +19,11 @@ const reactiveObj = reactive({
     b: 2,
   },
   array: [1, 2, 3]
-})
+});
+
+// 복사된 읽기전용 객체
+const objCopy = readonly(reactiveObj);
+
 
 
 function reactFunc() {
@@ -32,8 +36,9 @@ function reactFunc() {
     // refObj.value = { a: 2 }
 
     // reactive -> 반응성 객체이기에 변경감지
-    reactiveObj.array.push(4)
+    reactiveObj.array.push(4);
 }
 
-setTimeout( reactFunc ,3000)
+setTimeout( reactFunc ,3000);
+
 </script>

@@ -33,9 +33,25 @@
     })
     </script>
     ```
+- 관련 함수
+    1. 
 
 ## reactive()
 - 오브젝트로 선언되며 내부요소에 값을 유동적으로 변경 가능​​​​​​​
+    ```
+    <script>
+    import { reactive } from "vue";
+
+    const test = reactive({​​​​​​​​​​​​​​
+        a: 1,
+        b: "hi",
+    }​​​​​​​​​​​​​​);
+
+    // 오브젝트로 선언되기에 특정값을 사용하는 경우 해당 요소를 붙여 표기한다.
+    console.log(test.a)
+
+    </script>
+    ```
 - ref()객체의 경우 오브젝트로 선언한뒤 reactive객체처럼 사용이 가능하다.
     ```
     <script>
@@ -45,11 +61,49 @@
         a: 1,
         b: "hi",
     }​​​​​​​​​​​​​​);
-
+    // ref객체이기에 value로 접근한뒤 해당 요소를 붙여 접근한다.
+    console.log(test.value.a)
     </script>
     ```
 
-- 오브젝트로 선언되기에 특정값을 사용하는 경우 해당 요소를 붙여 표기한다.
+- 관련 함수(vue내장 객체로 import해서 사용)
+    1. isReactive(state)
+        - 해당 인수가 reactive로 생성된 객체인지를 판단하여 boolean값을 반환
+        - ref객체또한 false를 반환
+        ```
+        <script>
+        import { ref, reactive, isReactive } from "vue";
+
+        const test = reactive({​​​​​​​​​​​​​​
+            a: 1,
+            b: "hi",
+        }​​​​​​​​​​​​​​);
+        
+        const test2 = ref(0);
+
+        console.log(isReactive(test)) // true
+        console.log(isReactive(test2)) // false
+        </script>
+        ```
+    2. readonly()
+        - 인수의 reactive객체의 읽기전용 객체를 반환(참조형 복사된 객체)
+        - 읽기전용 객체이므로 변경이 불가능하다.
+        - 중첩객체또한 읽기전용이 된다.
+        ```
+        <script>
+        import { reactive, readonly } from "vue";
+
+        const test = reactive({​​​​​​​​​​​​​​
+            a: 1,
+            b: "hi",
+        }​​​​​​​​​​​​​​);
+
+        const testCopy = readonly(test);
+
+        // 복사된 객체가 읽기전용, 중첩된 읽기전용이기에 변경이 불가하다
+        testCopy.a = 2;
+        </script>
+        ```
 
 ## ref() vs reactive()
 - 공통점
