@@ -1,25 +1,36 @@
 # vue 내장 객체
 
 ## ref()
-- 단일속성을 가진 반응형 객체(ref객체내에서 복수의 데이터형을 가질 수 없다.)
+- 단일속성을 가진 반응형 객체
     ```
     <script>
     import {​​​​ ref }​​​​​​​​​​​ from "vue";
+    
     const test = ref(0);
-    test.value = 
+    test.value = 0
     </script>
     ```
 - DOM, 컴포넌트를 가리키는 속성(vue2에서는 이 특성만이 존재한다)
     ```
     <template>
-        <div ref="test" />
+        <div ref="test">test label</div>
     </template>
     
     <script>
-    import {​​​​​​​ ref }​​​​​​​​​​​​​​​​​​​​​ from "vue";
+    import { ref, onMounted } from "vue";
+    import reactiveDataView  from '@/components/reactiveDataView.vue';
+
     const test = ref("test");
-    console.log(test);
-    // <div ref="test" />의 데이터 습득
+
+    // mount전이므로 String "test"을 반환
+    console.log(test.value);
+
+    onMounted( () => {
+    // mount후이므로 dom객체 <div ref="test">test label</div>
+    console.log(test.value);
+    // 렌더링 된 dom요소내 엘리먼트에 접근가능
+    console.log(test.value.innerText);
+    })
     </script>
     ```
 
@@ -28,11 +39,13 @@
 - ref()객체의 경우 오브젝트로 선언한뒤 reactive객체처럼 사용이 가능하다.
     ```
     <script>
-    import {​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​ ref }​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​ from "vue";
+    import { ref } from "vue";
+
     const test = ref({​​​​​​​​​​​​​​
-    a: 1,
-    b: "hi",
+        a: 1,
+        b: "hi",
     }​​​​​​​​​​​​​​);
+
     </script>
     ```
 
@@ -47,6 +60,7 @@
         <div>{{ test2.value }}</div>
         <div>{{ test3 }}</div>
     </template>
+
     <script>
     import {​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​ ref, reactive, onUpdated } from "vue"
     
@@ -61,24 +75,25 @@
     }​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​)
     
     setTimeout(() => {​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
-        test.value =5;
+        test.value = 5;
     }​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​, 1000);
     
     setTimeout(() => {​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
-        test2.value =5;
+        test2.value = 5;
     }​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​, 2000);
     
     setTimeout(() => {​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
-        test3 =5;
+        test3 = 5;
     }​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​, 3000);
     </script>
     ```
 - 값을 직접 변경하는 것이 아닌 value에 접근하여 변경
     ```
     <script>
-    import {​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​ ref }​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​ from "vue";
+    import { ref } from "vue";
+    
     const test = ref(10);
-    const test2 = reactive({​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​ value: 10 }​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​);
+    const test2 = reactive({​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​ value: 10 }     ​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​);
     // test2.value
     
     console.log(test);
