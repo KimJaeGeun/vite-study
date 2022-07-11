@@ -1,6 +1,7 @@
 <template>
+<LoginView />
 <!-- <reactive-data-view /> -->
-<ref-test-view />
+<!-- <ref-test-view /> -->
 <!-- <use-store-view /> -->
 <!-- <div>{{ counter }}</div>
 <button @click="increment">increment</button> -->
@@ -8,7 +9,8 @@
 
 <script setup lang="ts">
 // import { onMounted } from 'vue';
-import refTestView  from '@/components/refTestView.vue';
+import LoginView from './views/LoginView.vue';
+// import refTestView  from '@/components/refTestView.vue';
 // import reactiveDataView  from '@/components/reactiveDataView.vue';
 // import useStoreView from '@/components/useStoreView.vue';
 // import { useCounter } from '@/testFunction/toRef.js'
