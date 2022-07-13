@@ -1,27 +1,27 @@
 <template>
-<LoginView />
-<!-- <reactive-data-view /> -->
-<!-- <ref-test-view /> -->
-<!-- <use-store-view /> -->
-<!-- <div>{{ counter }}</div>
-<button @click="increment">increment</button> -->
+<div>
+<!-- {{defaultStore.greeting}} -->
+{{arrangeStore.greeting}}
+</div>
+<button @click="edit">edit greeting</button>
+<button @click="plus">plus 2</button>
+
 </template>
 
 <script setup lang="ts">
-// import { onMounted } from 'vue';
-import LoginView from './views/LoginView.vue';
-// import refTestView  from '@/components/refTestView.vue';
-// import reactiveDataView  from '@/components/reactiveDataView.vue';
-// import useStoreView from '@/components/useStoreView.vue';
-// import { useCounter } from '@/testFunction/toRef.js'
+import { useDefaultStore, useArrangeStore } from '@/stores/sampleStore';
 
-// const { counter, increment } = useCounter();
+const defaultStore = useDefaultStore();
+const arrangeStore = useArrangeStore();
 
-// onMounted(() => {
-//   setTimeout(increment, 3000);
-// })
+function edit() {
+    // defaultStore.ageUp(1);
+    arrangeStore.ageUp(1);
+}
 
-
+function plus() {
+    arrangeStore.age += 2;
+}
 
 
 </script>

@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import InputForm from '@/components/form/InputForm.vue';
+import InputForm from '@/components/common/form/InputForm.vue';
 
 const userInfo = reactive({
     id: '',
