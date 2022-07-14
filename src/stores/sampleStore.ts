@@ -1,6 +1,6 @@
 
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
+import { ref, reactive, computed } from 'vue';
 
 export const useDefaultStore = defineStore({
     id: 'default',
@@ -9,7 +9,7 @@ export const useDefaultStore = defineStore({
         age: 31,
     }),
     getters: {
-        greeting: ({ name, age }) => `my name is ${name}, and ${age}old`
+        greeting: (state) => `my name is ${state.name}, and ${state.age}old`
     },
     actions: {
         ageUp (num:number) {
@@ -18,7 +18,17 @@ export const useDefaultStore = defineStore({
     }
 });
 
+const defaultState = {
+    name: 'jaegeun',
+    age: 31,
+}
+
 export const useArrangeStore = defineStore('arrange', () => {
+    const work = reactive({
+        time: 100,
+        worker: 'me'
+    });
+
     const name = ref('jaegeun');
     const age = ref(31);
 
@@ -28,5 +38,10 @@ export const useArrangeStore = defineStore('arrange', () => {
         age.value += num;
     }
 
-    return {name, age, greeting, ageUp}
+    function initState () {
+        name.value = defaultState.name;
+        age.value = defaultState.age;
+    }
+
+    return {work, name, age, greeting, ageUp, initState}
 });
