@@ -37,10 +37,15 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useDefaultStore, useArrangeStore } from '@/stores/sampleStore';
 
 const defaultStore = useDefaultStore();
 const arrangeStore = useArrangeStore();
+
+const { name, age } = storeToRefs(arrangeStore);
+
+console.log(name, age)
 
 function edit(type:string) {
     if (type === 'o') {
