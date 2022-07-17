@@ -1,3 +1,58 @@
+# Composition API
+- 개요
+    - vue3에서 추가된 Vue 컴포넌트의 로직 구성을 유연하게 처리할수 있게끔 설계된 API
+    - setup함수 내에서 사용 가능
+        ```
+        // 스크립트에서 선언 가능하다.
+        <script setup>
+        import { ref } from 'vue';
+
+        const data = ref('');
+        </script>
+        ```
+    - 과거 vue2의 구성요소는 각 컴포넌트 구성요소중 기능에 따라 나뉘어 있었지만, 해당 기능을 관계성에 맞춰 배치하여 사용할 수 있게끔 만든 것
+        - [참고](https://vuejs.org/guide/extras/composition-api-faq.html#why-composition-api)
+        - vue2(Option API: 컴포넌트 구성요소의 기능에 따라 나뉨)
+        ```
+        // data
+        data() {
+            return {
+                // dataA 초기화
+                dataA: '',
+                // dataB 초기화
+                dataB: ''
+            }
+        }
+        // method
+        method: {
+            // dataA 수정 메서드
+            editDataA() {
+                dataA = 'value';
+            },
+            // dataB 수정 메서드
+            editDataB() {
+                dataB = 'value';
+            }
+        }
+
+        ```
+        - vue3(Composition api: 컴포넌트 구성요소의 관계에 따라 나눌 수 있음)
+        ```
+        // dataA 초기화
+        const dataA = ref('');
+        // dataA 수정 메서드
+        function editDataA() {
+            dataA.value = 'value';
+        }
+
+        // dataA 초기화
+        const dataB = ref('');
+        // dataA 수정 메서드
+        function editDataB() {
+            dataB.value = 'value';
+        }
+        ```
+
 # vue 내장 객체
 
 ## ref()
