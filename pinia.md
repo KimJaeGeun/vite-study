@@ -108,6 +108,54 @@ store.sampleFunc();
     // 직접 값을 변경 가능하다.
     store.state.sampleA = value;
     ```
+- storeToRefs()
+    - store내 선언한 반응성객체를 구조분해할당
+    
+    ```
+    // store 정의
+    import { defineStore } from 'pinia';
+    import { ref, reactive, computed } from 'vue';
+
+    // option api
+    export const useDefaultStore = defineStore({
+        id: 'default',
+        state: () => ({
+            name: 'jaegeun',
+            age: 31,
+        }),
+        getters: {
+            greeting: (state) => `my name is ${state.name}, and ${state.age}old`
+        }
+    });
+
+    // composition api
+    export const useArrangeStore = defineStore('arrange', () => {
+        const name = ref('jaegeun');
+        const age = ref(31);
+
+        const greeting = computed(() => `my name is ${name.value}, and ${age.value}old`);
+
+        return {work, name, age, greeting }
+    });
+    ```
+
+    ```
+    // store 사용
+    import { storeToRefs } from 'pinia'
+    import { useDefaultStore, useArrangeStore } from '@/stores/sampleStore';
+
+    const defaultStore = useDefaultStore();
+    const arrangeStore = useArrangeStore();
+
+    const { name: name1, age: age1, greeting: greeting1 } = storeToRefs(defaultStore);
+    const { name: name2, age: age2, greeting: greeting2 } = storeToRefs(arrangeStore);
+
+    // state(reactive내 ref객체), getter(computed ref객체)
+    console.log(name1, age1, greeting1);
+
+    // ref객체
+    console.log(name2, age2, greeting2);
+    ```
 - $patch({})
     - 복수의 state요소를 일괄 변경
     ```

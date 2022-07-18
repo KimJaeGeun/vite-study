@@ -43,9 +43,12 @@ import { useDefaultStore, useArrangeStore } from '@/stores/sampleStore';
 const defaultStore = useDefaultStore();
 const arrangeStore = useArrangeStore();
 
-const { name, age } = storeToRefs(arrangeStore);
+const { name: name1, age: age1, greeting: greeting1 } = storeToRefs(defaultStore);
 
-console.log(name, age)
+const {  name: name2, age: age2, greeting: greeting2 } = storeToRefs(arrangeStore);
+
+console.log(greeting1)
+
 
 function edit(type:string) {
     if (type === 'o') {
