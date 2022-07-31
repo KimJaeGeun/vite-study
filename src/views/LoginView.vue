@@ -65,6 +65,7 @@ function login () {
         useLoginStore.sampleLogin();
         useMsgModalStore.setMessage(true, 'login 성공');
     } else {
+        useLoginStore.login({id: 'qwer', password: 'qwer'});
         useMsgModalStore.setMessage(true, 'login 실패');
     }
 }

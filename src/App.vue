@@ -1,18 +1,10 @@
 <template>
-<div>
-    <nav>
-        <RouterLink to="/">
-            login
-        </RouterLink>
-    </nav>
-</div>
 <RouterView />
 <msgModal v-if="useMsgModalStore.isOn" />
-
 </template>
 
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterView } from 'vue-router';
 
 import msgModal from '@/components/common/modal/msgModal.vue'
 

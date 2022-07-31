@@ -1,10 +1,5 @@
 import { defineStore } from 'pinia';
 
-type msgModalState = {
-    isOn: boolean,
-    msg: string,
-};
-
 const msgModalStore = defineStore({
     id: 'msgModalStore',
     state: () => ({
