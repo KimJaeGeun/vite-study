@@ -1,20 +1,21 @@
-
 import { defineStore } from 'pinia';
-import { ref, reactive } from 'vue';
 
-export const msgModalStore = defineStore('msgModalStore', () => {
-    const defaultState = reactive({
+type msgModalState = {
+    isOn: boolean,
+    msg: string,
+};
+
+const msgModalStore = defineStore({
+    id: 'msgModalStore',
+    state: () => ({
         isOn: false,
         msg: '',
-    });
-
-    const isOn = ref(false);
-    const msg = ref('');
-
-    function initState () {
-        isOn.value = defaultState.isOn;
-        msg.value = defaultState.msg;
+    }),
+    actions: {
+        setMessage (isOn: boolean, msg: string) {
+            [this.isOn, this.msg] = [isOn, msg];
+        }
     }
-
-    return {isOn, msg, initState}
 });
+
+export default msgModalStore;

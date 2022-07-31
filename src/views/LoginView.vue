@@ -1,68 +1,78 @@
 <template>
-<div class="login_box">
-    <template v-if="useLoginStore.isLogin">
-        <h3>로그인 되어있어요.</h3>
-        <button @click="logout">logout</button>
-    </template>
-    <template v-else>
-        <InputForm
-            refKey=""
-            type="text"
-            name="userId"
-            placeholder="0000"
-            :inputValue="userInfo.id"
-            v-on:update:value="setInputId"
-        />
-        <InputForm
-            refKey=""
-            type="text"
-            name="userPassword"
-            placeholder="0000"
-            :inputValue="userInfo.password"
-            v-on:update:value="setInputPAssword"
-        />
-        <button @click="login">login</button>
-    </template>
-</div>
+    <div class="login_box">
+        <template v-if="userInfo.authToken">
+            <h3>로그인 되어있어요.</h3>
+            <button @click="logout">
+                logout
+            </button>
+        </template>
+        <template v-else>
+            <InputForm
+                ref-key=""
+                type="text"
+                name="userId"
+                placeholder="0000"
+                :input-value="inputData.id"
+                @update:value="setInputId"
+            />
+            <InputForm
+                ref-key=""
+                type="text"
+                name="userPassword"
+                placeholder="0000"
+                :input-value="inputData.password"
+                @update:value="setInputPAssword"
+            />
+            <button @click="login">
+                login
+            </button>
+        </template>
+    </div>
 </template>
 
 <script setup lang="ts">
 import { reactive } from 'vue';
-import { loginStore } from '@/stores/loginStore';
-import { msgModalStore } from '@/stores/msgModalStore';
+import { storeToRefs } from 'pinia';
+import loginStore from '@/stores/loginStore';
+import msgModalStore from '@/stores/msgModalStore';
 
 import InputForm from '@/components/common/form/InputForm.vue';
 
 const useLoginStore = loginStore();
 const useMsgModalStore = msgModalStore();
-const userInfo = reactive({
+
+// action은 반응성 객체가 아니기에 구조 분해 할당할 수 없다.
+const { userInfo } = storeToRefs(useLoginStore);
+
+const inputData = reactive({
     id: '',
     password: ''
 });
 
 // InputForm에 입력한 값을 받아옴
-function setInputId(value:string) {
-     userInfo.id = value;
+function setInputId (value: string) {
+    inputData.id = value;
 }
 
-function setInputPAssword(value:string) {
-     userInfo.password = value;
+function setInputPAssword (value: string) {
+    inputData.password = value;
 }
 
-async function login() {
-    // 로그인 함수
-    useMsgModalStore.isOn = true;
-    if (userInfo.id === '0000' && userInfo.password === '0000') {
-        await useLoginStore.login();
-        console.log(useLoginStore.isLogin);
-        useMsgModalStore.msg = 'login 성공'
+// 로그인 함수
+function login () {
+    if (inputData.id === '0000' && inputData.password === '0000') {
+        // TODO: 실제 비동기 처리 시 해당 함수 변경
+        useLoginStore.sampleLogin();
+        useMsgModalStore.setMessage(true, 'login 성공');
     } else {
-        useMsgModalStore.msg = 'login 실패'
+        useMsgModalStore.setMessage(true, 'login 실패');
     }
 }
-function logout() {
-    useMsgModalStore.isOn = true;
-    useMsgModalStore.msg = 'logout되었어요.'
+
+// 로그아웃 함수
+function logout () {
+    useMsgModalStore.setMessage(true, 'logout되었어요.');
+    // TODO: 실제 비동기 처리 시 해당 함수 변경
     useLoginStore.logout();
 }
 </script>
@@ -76,6 +86,15 @@ function logout() {
     border-radius: 5px;
     background-color: aliceblue;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+:deep(.input_box) input {
+    font-size: 20px;
+    margin: 5px;
 }
 
 button {
