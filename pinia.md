@@ -32,11 +32,13 @@
             // 정의한 store의 고유 식별자
             id: 'id',
             // 전역 상태 데이터
+            // 화살표 함수형태로 값을 선언한다.
             state: () => ({
                 sampleState: '',
             }),
             // 상태를 가공하여 내보내는 readonly데이터
             getter: {
+                // getter내부에서 파라메터로 state에 접근이 가능하다.
                 sampleGetter: (state) => { state.sampleState }
             },
             // 전역적 함수, 상태를 가공하는 함수
