@@ -3,6 +3,8 @@ import validLoginState from '@/global/validLogin';
 
 import ListView from '@/views/ListView.vue';
 import LoginView from '@/views/LoginView.vue';
+import LoginView2 from '@/views/LoginView2.vue';
+import LoginView3 from '@/views/LoginView3.vue';
 import InfoView from '@/views/InfoView.vue';
 
 
@@ -18,6 +20,16 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView
+    },
+    {
+      path: '/login2',
+      name: 'login2',
+      component: LoginView2
+    },
+    {
+      path: '/login3',
+      name: 'login3',
+      component: LoginView3
     },
     {
       path: '/info',

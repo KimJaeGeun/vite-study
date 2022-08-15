@@ -7,23 +7,25 @@
             </button>
         </template>
         <template v-else>
-            <InputForm
-                type="text"
-                name="userId"
-                placeholder="0000"
-                :input-value="inputData.id"
-                @update:value="setInputId"
-            />
-            <InputForm
-                type="password"
-                name="userPassword"
-                placeholder="0000"
-                :input-value="inputData.password"
-                @update:value="setInputPAssword"
-            />
-            <button @click="login">
-                login
-            </button>
+            <form :validation-schema="schema">
+                <InputForm
+                    type="text"
+                    name="userId"
+                    placeholder="0000"
+                    :input-value="inputData.id"
+                    @update:value="setInputId"
+                />
+                <InputForm
+                    type="password"
+                    name="userPassword"
+                    placeholder="0000"
+                    :input-value="inputData.password"
+                    @update:value="setInputPAssword"
+                />
+                <button @click="login">
+                    login
+                </button>
+            </form>
         </template>
     </div>
 </template>
@@ -31,6 +33,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import { storeToRefs } from 'pinia';
+import * as yup from 'yup';
 
 import loginStore from '@/stores/loginStore';
 import msgModalStore from '@/stores/msgModalStore';
@@ -47,6 +50,10 @@ const inputData = reactive({
     id: '',
     password: ''
 });
+const schema = yup.object().shape({
+    id: yup.string().required("require id"),
+    password: yup.string().required("require password"),
+});
 
 // InputForm에 입력한 값을 받아옴
 function setInputId (value: string) {
@@ -56,17 +63,22 @@ function setInputId (value: string) {
 function setInputPAssword (value: string) {
     inputData.password = value;
 }
-
 // 로그인 함수
 function login () {
-    if (inputData.id === '0000' && inputData.password === '0000') {
-        // TODO: 실제 비동기 처리 시 해당 함수 변경
-        useLoginStore.sampleLogin();
-        useMsgModalStore.setMessage(true, 'login 성공');
-    } else {
-        useLoginStore.login({id: 'qwer', password: 'qwer'});
-        useMsgModalStore.setMessage(true, 'login 실패');
-    }
+    schema.isValid(inputData).then((valid :boolean) => {
+        // valid는 벨리데이션 통과여부
+        // boolean
+        console.log(valid);
+    });
+    console.log(schema);
+    // if (inputData.id === '0000' && inputData.password === '0000') {
+    //     // TODO: 실제 비동기 처리 시 해당 함수 변경
+    //     useLoginStore.sampleLogin();
+    //     useMsgModalStore.setMessage(true, 'login 성공');
+    // } else {
+    //     useLoginStore.login({id: 'qwer', password: 'qwer'});
+    //     useMsgModalStore.setMessage(true, 'login 실패');
+    // }
 }
 
 // 로그아웃 함수

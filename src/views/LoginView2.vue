@@ -11,14 +11,15 @@
                 type="text"
                 name="userId"
                 placeholder="0000"
-                :input-value="inputData.id"
+                :validation="inputData.id.errorMessage"
+                v-model="inputData.id"
                 @update:value="setInputId"
             />
             <InputForm
                 type="password"
                 name="userPassword"
                 placeholder="0000"
-                :input-value="inputData.password"
+                v-model="inputData.password"
                 @update:value="setInputPAssword"
             />
             <button @click="login">
@@ -31,6 +32,8 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import { storeToRefs } from 'pinia';
+import { useField } from 'vee-validate';
+import * as yup from 'yup';
 
 import loginStore from '@/stores/loginStore';
 import msgModalStore from '@/stores/msgModalStore';
@@ -44,27 +47,27 @@ const useMsgModalStore = msgModalStore();
 const { userInfo } = storeToRefs(useLoginStore);
 
 const inputData = reactive({
-    id: '',
-    password: ''
+    id: useField<string>('id', yup.string().required('id 입력은 필수입니다.').max(4, '최대 4자리의 아이디를 입력하세요.')),
+    password: useField<string>('password', yup.string().required('password 입력은 필수입니다.').max(4, '최대 4자리의 비밀번호를 입력하세요.')),
 });
+
 
 // InputForm에 입력한 값을 받아옴
 function setInputId (value: string) {
-    inputData.id = value;
+    inputData.id.value = value;
 }
 
 function setInputPAssword (value: string) {
-    inputData.password = value;
+    inputData.password.value = value;
 }
 
 // 로그인 함수
 function login () {
-    if (inputData.id === '0000' && inputData.password === '0000') {
+    if (inputData.id.value === '0000' && inputData.password.value === '0000') {
         // TODO: 실제 비동기 처리 시 해당 함수 변경
         useLoginStore.sampleLogin();
         useMsgModalStore.setMessage(true, 'login 성공');
     } else {
-        useLoginStore.login({id: 'qwer', password: 'qwer'});
         useMsgModalStore.setMessage(true, 'login 실패');
     }
 }

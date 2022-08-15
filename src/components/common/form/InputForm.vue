@@ -7,10 +7,11 @@
             :name="props.name"
             :placeholder="props.placeholder"
             :readOnly="props.readOnly"
-            :autocomplete="false"
-            :autofocus="false"
+            :autoComplete="props.autoComplete"
+            :autofocus="props.autofocus"
             v-model="inputValue"
         >
+        <span>{{ props.validation }}</span>
     </div>
 </template>
 
@@ -43,6 +44,18 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    autoComplete: {
+        type: Boolean,
+        default: false
+    },
+    autofocus: {
+        type: Boolean,
+        default: false
+    },
+    validation: {
+        type: String,
+        default: ''
+    }
 });
 
 const inputValue = ref('');
@@ -51,7 +64,15 @@ const inputValue = ref('');
 const emit = defineEmits(['update:value']);
 
 // input에 값을 입력할때마다 업데이트
-watch(inputValue, (value) => {
+watch(inputValue, (value :string) => {
     emit('update:value', value);
 });
 </script>
+
+<style scoped>
+span {
+    display: block;
+    color: red;
+}
+
+</style>
