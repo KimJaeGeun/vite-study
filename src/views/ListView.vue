@@ -11,6 +11,26 @@
             </RouterLink>
         </li>
         <li>
+            <RouterLink to="/login2">
+                login2
+            </RouterLink>
+        </li>
+        <li>
+            <RouterLink to="/login3">
+                login3
+            </RouterLink>
+        </li>
+        <li>
+            <RouterLink to="/login4">
+                login4
+            </RouterLink>
+        </li>
+        <li>
+            <RouterLink to="/login">
+                login
+            </RouterLink>
+        </li>
+        <li>
             <RouterLink to="/info">
                 Info
             </RouterLink>

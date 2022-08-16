@@ -5,6 +5,8 @@ import ListView from '@/views/ListView.vue';
 import LoginView from '@/views/LoginView.vue';
 import LoginView2 from '@/views/LoginView2.vue';
 import LoginView3 from '@/views/LoginView3.vue';
+import LoginView4 from '@/views/LoginView4.vue';
+
 import InfoView from '@/views/InfoView.vue';
 
 
@@ -30,6 +32,11 @@ const router = createRouter({
       path: '/login3',
       name: 'login3',
       component: LoginView3
+    },
+    {
+      path: '/login4',
+      name: 'login4',
+      component: LoginView4
     },
     {
       path: '/info',
