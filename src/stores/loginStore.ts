@@ -2,13 +2,13 @@ import { defineStore } from 'pinia';
 import Cookies from 'js-cookie';
 
 import loginApi from '@/api/login/api';
-import type { reqLogin } from '@/api/login/interface';
+import type { reqLogin, resLogin } from '@/api/login/interface';
 import validLoginState from '@/global/validLogin';
 
 const loginStore = defineStore({
     id: 'login',
     state: () => ({
-        userInfo: {
+        userInfo: <resLogin> {
             userId: '',
             userName: '',
             grade: '',

@@ -11,15 +11,13 @@
                 type="text"
                 name="userId"
                 placeholder="0000"
-                :input-value="inputData.id"
-                @update:value="setInputId"
+                v-model:value="inputData.id"
             />
             <InputForm
                 type="password"
                 name="userPassword"
                 placeholder="0000"
-                :input-value="inputData.password"
-                @update:value="setInputPAssword"
+                v-model:value="inputData.password"
             />
             <button @click="login">
                 login
@@ -47,15 +45,6 @@ const inputData = reactive({
     id: '',
     password: ''
 });
-
-// InputForm에 입력한 값을 받아옴
-function setInputId (value: string) {
-    inputData.id = value;
-}
-
-function setInputPAssword (value: string) {
-    inputData.password = value;
-}
 
 // 로그인 함수
 function login () {
