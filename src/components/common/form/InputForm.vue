@@ -18,44 +18,28 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 
+// defineProps에서는 외부에서 선언된 인터페이스, 타입은 적용할 수 없다.
 // 모든 코드에 타입스크립트 100% 적용 해야함
-const props = defineProps({
-    label: {
-        type: String,
-        default: ''
-    },
-    refKey: {
-        type: String,
-        default: ''
-    },
-    type: {
-        type: String,
-        default: ''
-    },
-    name: {
-        type: String,
-        default: ''
-    },
-    placeholder: {
-        type: String,
-        default: ''
-    },
-    readOnly: {
-        type: Boolean,
-        default: false
-    },
-    autoComplete: {
-        type: Boolean,
-        default: false
-    },
-    autofocus: {
-        type: Boolean,
-        default: false
-    },
-    validation: {
-        type: String,
-        default: ''
-    }
+const props = withDefaults(defineProps<{
+    label: string;
+    refKey: string;
+    type: string;
+    name: string;
+    placeholder: string;
+    readOnly: boolean;
+    autoComplete: boolean;
+    autofocus: boolean;
+    validation: string;
+}>(), {
+    label: '',
+    refKey: '',
+    type: '',
+    name: '',
+    placeholder: '',
+    readOnly: false,
+    autoComplete: false,
+    autofocus: false,
+    validation: '',
 });
 
 const inputValue = ref('');
