@@ -1,45 +1,38 @@
 <template>
     <div class="input_box">
-        <p>{{ props.label }}</p>
         <input
-            :ref="props.refKey"
-            :type="props.type"
-            :name="props.name"
-            :placeholder="props.placeholder"
-            :readOnly="props.readOnly"
-            :autoComplete="props.autoComplete"
-            :autofocus="props.autofocus"
-            v-model="inputValue"
+            :="props"
         >
-        <span>{{ props.validation }}</span>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-
-// defineProps에서는 외부에서 선언된 인터페이스, 타입은 적용할 수 없다.
-// 모든 코드에 타입스크립트 100% 적용 해야함
-const props = withDefaults(defineProps<{
-    label: string;
-    refKey: string;
+// input 내 바인딩 옵션 타입
+type Props = {
+    class?: string;
     type: string;
-    name: string;
-    placeholder: string;
-    readOnly: boolean;
-    autoComplete: boolean;
-    autofocus: boolean;
-    validation: string;
-}>(), {
-    label: '',
-    refKey: '',
+    name?: string;
+    placeholder?: string;
+    readonly?: boolean;
+    autofocus?: boolean;
+    disabled?: boolean;
+    maxlength?: number;
+    autocomplete?: string;
+    value?: string | number | undefined;
+};
+// 구조분해시 반응성이 상실되기에 구조분해를 할 수 없다.
+const props = withDefaults(defineProps<Props>(), {
+    class: '',
     type: '',
     name: '',
     placeholder: '',
-    readOnly: false,
-    autoComplete: false,
+    readonly: false,
     autofocus: false,
-    validation: '',
+    disabled: false,
+    maxlength: undefined,
+    autocomplete: '',
+    value: '',
 });
 
 const inputValue = ref('');
