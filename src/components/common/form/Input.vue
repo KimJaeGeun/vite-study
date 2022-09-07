@@ -25,6 +25,16 @@ type Props = {
     value?: InputValue;
 };
 
+// defineEmits 함수 타입
+type Emits = {
+    // 입력값 업데이트
+    (e: 'update:value', value: InputValue): void;
+    // 포커스에서 벗어날 시 이벤트
+    (e: 'blur'): void;
+    // 포커스 될 시 이벤트
+    (e: 'focus'): void;
+};
+
 // 구조분해시 반응성이 상실되기에 구조분해를 할 수 없다.
 const props = withDefaults(defineProps<Props>(), {
     class: '',
@@ -42,7 +52,7 @@ const props = withDefaults(defineProps<Props>(), {
 const inputValue = ref('');
 
 // input에 입력한 값을 부모 컴포넌트에 보냄
-const emit = defineEmits(['update:value']);
+const emit = defineEmits<Emits>();
 
 // input에 값을 입력할때마다 업데이트
 watch(inputValue, (value: string) => {
