@@ -2,12 +2,13 @@
     <div class="input_box">
         <input
             :="props"
+            v-on="{ focus, blur, input }"
         >
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
 import type { InputValue } from '@/mapping/type';
 
@@ -55,7 +56,17 @@ const inputValue = ref('');
 const emit = defineEmits<Emits>();
 
 // input에 값을 입력할때마다 업데이트
-watch(inputValue, (value: string) => {
-    emit('update:value', value);
-});
+const input = (e: Event) => {
+    emit('update:value', (e.target as HTMLInputElement).value);
+};
+
+// input컴포넌트 focus 시 이벤트 실행
+const focus = () => {
+    emit('focus');
+};
+
+// input컴포넌트 focus상태에서 벗어날 시 이벤트 실행
+const blur = () => {
+    emit('blur');
+};
 </script>
